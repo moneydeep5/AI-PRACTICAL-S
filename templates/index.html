@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodLens AI — Explainable NLP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">M</div>
+                <div>
+                    <div class="brand-name">MoodLens AI</div>
+                    <div class="brand-sub">Explainable NLP</div>
+                </div>
+            </div>
+
+            <div class="side-section">
+                <div class="side-label">Workspace</div>
+                <button class="nav-item active" data-section="analyzer">
+                    <span>✦</span> Analyzer
+                </button>
+                <button class="nav-item" data-section="how-it-works">
+                    <span>◈</span> How it works
+                </button>
+                <button class="nav-item" data-section="ethics">
+                    <span>◌</span> Ethics & safety
+                </button>
+            </div>
+
+            <div class="sidebar-card">
+                <div class="mini-pill">COLLEGE MINI PROJECT</div>
+                <h3>Simple AI.<br>Clear reasoning.</h3>
+                <p>No cloud model, no API key, and no training download required.</p>
+            </div>
+
+            <div class="side-footer">Python · Flask · HTML · CSS · JavaScript</div>
+        </aside>
+
+        <main class="main-area">
+            <section id="analyzer" class="section active-section">
+                <div class="topbar">
+                    <div>
+                        <p class="eyebrow">NLP WORKSPACE / TEXT CLASSIFICATION</p>
+                        <h1>Understand the <span>tone</span> of any text.</h1>
+                        <p class="hero-copy">Enter a sentence and the local NLP model predicts whether it is positive, negative, or neutral — then shows the evidence behind the result.</p>
+                    </div>
+                    <div class="model-status"><span class="status-dot"></span> Model online</div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="glass-card input-card">
+                        <div class="card-head">
+                            <div>
+                                <div class="card-kicker">INPUT</div>
+                                <h2>Analyze text</h2>
+                            </div>
+                            <span class="char-count" id="charCount">0 / 1000</span>
+                        </div>
+                        <textarea id="textInput" maxlength="1000" placeholder="Try: I really like this app because it is fast, simple and reliable."></textarea>
+                        <div class="quick-prompts">
+                            <button class="prompt" data-text="I love the new interface. It is beautiful and easy to use.">Positive example</button>
+                            <button class="prompt" data-text="The update is slow, confusing and disappointing.">Negative example</button>
+                            <button class="prompt" data-text="The application has three pages and runs on port five thousand.">Neutral example</button>
+                        </div>
+                        <button class="analyze-btn" id="analyzeBtn">
+                            <span>Analyze with AI</span><span class="arrow">→</span>
+                        </button>
+                        <div class="error-box" id="errorBox"></div>
+                    </div>
+
+                    <div class="glass-card result-card">
+                        <div class="card-head">
+                            <div>
+                                <div class="card-kicker">PREDICTION</div>
+                                <h2>AI result</h2>
+                            </div>
+                            <span class="local-badge">LOCAL MODEL</span>
+                        </div>
+                        <div class="result-main">
+                            <div class="score-ring" id="scoreRing">
+                                <div class="score-inner">
+                                    <div id="confidence">--</div>
+                                    <small>confidence</small>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="prediction-label" id="prediction">Waiting</div>
+                                <p class="result-message" id="message">Your prediction and explanation will appear here.</p>
+                            </div>
+                        </div>
+
+                        <div class="probabilities">
+                            <div class="prob-row"><span>Positive</span><div class="bar"><i id="positiveBar"></i></div><b id="positiveValue">0%</b></div>
+                            <div class="prob-row"><span>Neutral</span><div class="bar"><i id="neutralBar"></i></div><b id="neutralValue">0%</b></div>
+                            <div class="prob-row"><span>Negative</span><div class="bar"><i id="negativeBar"></i></div><b id="negativeValue">0%</b></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card explain-card">
+                        <div class="card-kicker">EXPLAINABILITY</div>
+                        <h2>Why did it decide that?</h2>
+                        <p class="muted">The model compares learned word probabilities. Strong evidence words are shown below.</p>
+                        <div class="evidence-list" id="evidenceList">
+                            <div class="empty-state">Analyze text to see influential words.</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card pipeline-card">
+                        <div class="card-kicker">NLP PIPELINE</div>
+                        <h2>From text to prediction</h2>
+                        <div class="pipeline">
+                            <div class="step"><span>01</span><strong>Clean</strong><small>Lowercase + tokenize</small></div>
+                            <div class="line"></div>
+                            <div class="step"><span>02</span><strong>Learn</strong><small>Word frequencies</small></div>
+                            <div class="line"></div>
+                            <div class="step"><span>03</span><strong>Classify</strong><small>Naive Bayes scores</small></div>
+                            <div class="line"></div>
+                            <div class="step"><span>04</span><strong>Explain</strong><small>Evidence words</small></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="how-it-works" class="section">
+                <div class="content-width">
+                    <p class="eyebrow">MODEL NOTES</p>
+                    <h1>How the mini AI works</h1>
+                    <p class="hero-copy">MoodLens uses a lightweight multinomial-style Naive Bayes classifier built directly in Python. This keeps the demonstration easy to inspect and run locally.</p>
+                    <div class="info-grid">
+                        <div class="glass-card info-card"><div class="big-number">01</div><h3>Tokenization</h3><p>The text is converted to lowercase words. Common stopwords are removed so words with stronger signal have more influence.</p></div>
+                        <div class="glass-card info-card"><div class="big-number">02</div><h3>Training</h3><p>A small built-in labeled dataset teaches the classifier which words are commonly associated with positive, negative, and neutral language.</p></div>
+                        <div class="glass-card info-card"><div class="big-number">03</div><h3>Prediction</h3><p>The model calculates log-probability scores for all three classes and converts them into an easy-to-read confidence distribution.</p></div>
+                        <div class="glass-card info-card"><div class="big-number">04</div><h3>Explanation</h3><p>For known words, the app compares class-specific probabilities. Words with stronger differences become the displayed evidence.</p></div>
+                    </div>
+                    <div class="glass-card formula-card">
+                        <div class="card-kicker">CORE IDEA</div>
+                        <h2>Naive Bayes scoring</h2>
+                        <p class="formula">score(class) = log P(class) + Σ log P(word | class)</p>
+                        <p class="muted">The implementation uses Laplace smoothing so unseen words do not break the calculation.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ethics" class="section">
+                <div class="content-width">
+                    <p class="eyebrow">RESPONSIBLE AI</p>
+                    <h1>Ethics & explainability</h1>
+                    <p class="hero-copy">This prototype is designed for education. It should demonstrate AI concepts, not make high-impact decisions about real people.</p>
+                    <div class="ethics-grid">
+                        <div class="glass-card ethics-card"><span class="ethics-icon">01</span><h3>Bias & dataset limits</h3><p>The training examples are small and handcrafted. Language, slang, culture, and context can be underrepresented, so predictions may be biased or wrong.</p></div>
+                        <div class="glass-card ethics-card"><span class="ethics-icon">02</span><h3>Privacy</h3><p>Text is processed locally by the Flask app and is not intentionally stored. In a real deployment, logs, retention, and access controls must still be designed carefully.</p></div>
+                        <div class="glass-card ethics-card"><span class="ethics-icon">03</span><h3>Human oversight</h3><p>A confidence score is not proof. A human should review important decisions instead of treating the prediction as an objective truth.</p></div>
+                        <div class="glass-card ethics-card"><span class="ethics-icon">04</span><h3>Explainability</h3><p>The app exposes the influential words used by the model. This improves transparency, but it does not guarantee a complete causal explanation of language.</p></div>
+                        <div class="glass-card ethics-card"><span class="ethics-icon">05</span><h3>Fair use</h3><p>Do not use this student prototype for hiring, admissions, medical diagnosis, credit, policing, or other high-impact profiling.</p></div>
+                        <div class="glass-card ethics-card"><span class="ethics-icon">06</span><h3>Accuracy & testing</h3><p>The demo should be evaluated with a larger test set before any real use. Precision, recall, class balance, and errors should be reported.</p></div>
+                    </div>
+                    <div class="glass-card report-card">
+                        <div><div class="card-kicker">REPORT SUMMARY</div><h2>Responsible AI statement</h2></div>
+                        <p>MoodLens AI demonstrates that an NLP system should communicate not only <em>what</em> it predicts, but also <em>why</em>, where its data came from, and where its limits are. For a college project, the most important ethical principle is to keep the scope educational and maintain human judgment for consequential decisions.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
